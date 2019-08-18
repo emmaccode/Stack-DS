@@ -33,14 +33,14 @@ Now:
 python stackds.py
 ##Documentation
 Documentation is available on the GitHub Wiki page.
-#Changelog
+# Changelog
 
 Version 0.0.2_____________
-Enabled Debug by Default for Alpha 0.0.2
-Added df refresh function
-Added DataFrame Filemenu
-Added Image Renderer, and CSV export.
-Added global CSS
-Added Notebook ID updater
+Enabled Debug by Default for Alpha 0.0.2,
+Added df refresh function,
+Added DataFrame Filemenu,
+Added Image Renderer, and CSV export,
+Added global CSS,
+Added Notebook ID updater,
 Version 0.0.1_____________
 ___Init___
