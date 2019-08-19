@@ -174,7 +174,19 @@ class GUI:
 		self.df_live_code.show()
 		self.dfexeci = self.builder.get_object('df_exec_input')
 		self.dfexeco = self.builder.get_object('df_exec_output')
-#
+	#<------Drop----->
+	def fm_df_drop_cl(self,spaghetti):
+		self.dropdialog = self.builder.get_object('drop_dialog')
+		self.packbox = self.builder.get_object('packbox')
+		columnnumber = 1
+		for columns in self.dataframe:
+			columntitle = 'pizza'
+			columnnumber = str(columnnumber)
+			self.packbox.append(columntitle,columnnumber)
+			columnnumber = int(columnnumber)
+			columnnumber = columnnumber+1
+		self.dropdialog.show()
+
 #|	|	|	|	|	|	|	|	|	|	|	|	|	|
 #|	|	|	|	|	Dialogs	|	|	|	|	|	|	|
 #|	|	|	|	|	|	|	|	|	|	|	|	|	|
@@ -299,12 +311,17 @@ class GUI:
 		print('===zIpy Lite 0.0.1===')
 		print('*********************')
 		try:
-			exec userexec
+			exec(userexec)
 		except:
 			print('zIpy Lite has found an error!')
 			outputbuffer.set_text(buffer.getvalue())
 		outputbuffer.set_text(buffer.getvalue())
 		self.dfexeco.set_buffer(outputbuffer)
+		self.updatedataview(df)
+	#<-------Drop-------->
+	def df_drop_click(self,ppe):
+		ide = self.packbox.get_active_text()
+		df = self.dataframe.drop(columns=[ide])
 		self.updatedataview(df)
 	#_____________________________________
 	#<<<<<<<<<Class Accessories>>>>>>>>>>>
@@ -313,9 +330,6 @@ class GUI:
 		dfforconv = df.head(self.display_head)
 		scroller = Gtk.ScrolledWindow.new()
 		convertimage(dfforconv,css,'swap.png')
-		dfimage = Gtk.Image.new_from_file('swap.png')
-		scroller.add(dfimage)
-		self.notebooklabel.set_text('df'+str(index+1))
 		page_num = self.id_counter.get_label()
 		scrolleroller = self.thenotebook.get_nth_page(int(page_num))
 		dfrealimage = scrolleroller.get_focus_child()
