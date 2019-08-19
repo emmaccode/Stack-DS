@@ -31,7 +31,7 @@ run:
 ./configure && make && sudo make install
 Now:
 python stackds.py
-##Documentation
+## Documentation
 Documentation is available on the GitHub Wiki page.
 # Changelog
 
