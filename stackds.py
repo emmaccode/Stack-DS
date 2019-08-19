@@ -46,7 +46,6 @@ from shutil import copyfile
 from subprocess import Popen, PIPE
 from cStringIO import StringIO
 #TODO Future Dependencies:
-#dependency: Plotly Express
 #dependency: Sklearn
 #TODO install in install.sh
 #Dependency: sudo apt-get install wkhtmltopdf
@@ -168,8 +167,10 @@ class GUI:
 	def df_exec_mb(self,pasghetti):
 		self.df_live_code = self.builder.get_object('df_live_code')
 		self.df_exec_output = self.builder.get_object('df_exec_output')
-		#self.df_exec_output.modify_bg(Gtk.StateType.Normal,
-		#							Gdk.Color(20000, 10000, 10000))
+		self.df_exec_output.modify_base(Gtk.StateFlags.NORMAL,
+										Gdk.color_parse('green'))
+		self.df_exec_output.modify_text(Gtk.StateFlags.NORMAL,
+										Gdk.color_parse('white'))
 		#TODO Change Color^^
 		self.df_live_code.show()
 		self.dfexeci = self.builder.get_object('df_exec_input')
@@ -178,14 +179,14 @@ class GUI:
 	def fm_df_drop_cl(self,spaghetti):
 		self.dropdialog = self.builder.get_object('drop_dialog')
 		self.packbox = self.builder.get_object('packbox')
-		columnnumber = 1
-		for columns in self.dataframe:
-			columntitle = 'pizza'
-			columnnumber = str(columnnumber)
-			self.packbox.append(columntitle,columnnumber)
-			columnnumber = int(columnnumber)
-			columnnumber = columnnumber+1
+		self.drop_content_toggle = self.builder.get_object(
+													'drop_content_toggle')
+		self.drop_row_toggle = self.builder.get_object('drop_row_toggle')
+		self.drop_column_toggle = self.builder.get_object('drop_column_toggle')
 		self.dropdialog.show()
+	#<------Clean------>
+	def fm_clean_select(self,clean):
+		print('Clean')
 
 #|	|	|	|	|	|	|	|	|	|	|	|	|	|
 #|	|	|	|	|	Dialogs	|	|	|	|	|	|	|
@@ -320,13 +321,61 @@ class GUI:
 		self.updatedataview(df)
 	#<-------Drop-------->
 	def df_drop_click(self,ppe):
+		df = self.dataframe
 		ide = self.packbox.get_active_text()
-		df = self.dataframe.drop(columns=[ide])
+		if self.columndrop == True:
+			df = df.drop(columns=[ide])
+		if self.rowdrop == True:
+			df = df.drop([ide])
+		if self.contentdrop == True:
+			print('temp')
 		self.updatedataview(df)
+		self.dropdialog.show()
+	def Df_Drop_Cancel(self,ppc):
+		self.dropdialog.hide()
+	def on_drop_row_t(self,wwc):
+		columnnumber = 1
+		df = self.dataframe
+		self.rowdrop = True
+		self.contentdrop = False
+		self.columndrop = False
+		self.drop_content_toggle.set_active(False)
+		self.drop_column_toggle.set_active(False)
+		self.packbox.remove_all()
+		for i in df.index:
+			columntitle = str(i)
+			columnnumber = str(columnnumber)
+			self.packbox.append(columnnumber,columntitle)
+			columnnumber = int(columnnumber)
+			columnnumber = columnnumber+1
+	def on_drop_content_t(self,wwe):
+		self.rowdrop = False
+		self.contentdrop = True
+		self.columndrop = False
+		self.drop_row_toggle.set_active(False)
+		self.drop_column_toggle.set_active(False)
+		self.packbox.remove_all()
+		self.packbox.Has_Entry = True
+	def on_drop_column_t(self,wwb):
+		self.columndrop = True
+		self.contentdrop = False
+		self.rowdrop = False
+		self.drop_content_toggle.set_active(False)
+		self.drop_row_toggle.set_active(False)
+		self.packbox.remove_all()
+		columnnumber = 1
+		df = self.dataframe
+		for (columnName, columnData) in df.iteritems():
+			columnparse = str(columnName)
+			columnnumber = str(columnnumber)
+   			self.packbox.append(columnnumber,columnparse)
+			columnnumber = int(columnnumber)
+			columnnumber = columnnumber+1
 	#_____________________________________
 	#<<<<<<<<<Class Accessories>>>>>>>>>>>
 	def updatedataview(self,df):
 		df.to_csv(self.swapfileactive)
+		self.dataframe = pd.read_csv(self.swapfileactive)
 		dfforconv = df.head(self.display_head)
 		scroller = Gtk.ScrolledWindow.new()
 		convertimage(dfforconv,css,'swap.png')
