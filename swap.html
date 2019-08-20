@@ -29,76 +29,180 @@
     <tr style="text-align: right;">
       <th></th>
       <th>Unnamed: 0</th>
-      <th>MeasureId</th>
-      <th>MeasureName</th>
-      <th>MeasureType</th>
-      <th>StratificationLevel</th>
-      <th>StateFips</th>
-      <th>StateName</th>
-      <th>CountyFips</th>
-      <th>CountyName</th>
-      <th>ReportYear</th>
-      <th>Value</th>
-      <th>Unit</th>
-      <th>UnitName</th>
-      <th>DataOrigin</th>
-      <th>MonitorOnly</th>
+      <th>Unnamed: 0.1</th>
+      <th>ID</th>
+      <th>State</th>
+      <th>Operating_System</th>
+      <th>CPU_Manufacturer</th>
+      <th>CPU_Year</th>
+      <th>Satisfaction</th>
+      <th>Budget Processor</th>
+      <th>OEM of GPU</th>
+      <th>What Year was your GPU released?</th>
+      <th>User's GPU Rating</th>
+      <th>User's Computer Rating</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
       <td>0</td>
-      <td>83</td>
-      <td>Number of days with maximum 8-hour average ozo...</td>
-      <td>Counts</td>
-      <td>State x County</td>
+      <td>0</td>
       <td>1</td>
-      <td>Alabama</td>
-      <td>1027</td>
-      <td>Clay</td>
-      <td>1999</td>
-      <td>33.0</td>
-      <td>No Units</td>
-      <td>No Units</td>
-      <td>Monitor Only</td>
-      <td>1</td>
+      <td>Tennessee</td>
+      <td>Linux</td>
+      <td>Intel</td>
+      <td>2011</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>AMD</td>
+      <td>2013</td>
+      <td>3</td>
+      <td>7</td>
     </tr>
     <tr>
       <th>1</th>
       <td>1</td>
-      <td>83</td>
-      <td>Number of days with maximum 8-hour average ozo...</td>
-      <td>Counts</td>
-      <td>State x County</td>
       <td>1</td>
-      <td>Alabama</td>
-      <td>1051</td>
-      <td>Elmore</td>
-      <td>1999</td>
-      <td>5.0</td>
-      <td>No Units</td>
-      <td>No Units</td>
-      <td>Monitor Only</td>
-      <td>1</td>
+      <td>2</td>
+      <td>California</td>
+      <td>Classic Windows (Vista/XP/2000/ME/98)</td>
+      <td>Other</td>
+      <td>2003</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>Other</td>
+      <td>2019</td>
+      <td>5</td>
+      <td>10</td>
     </tr>
     <tr>
       <th>2</th>
       <td>2</td>
-      <td>83</td>
-      <td>Number of days with maximum 8-hour average ozo...</td>
-      <td>Counts</td>
-      <td>State x County</td>
+      <td>2</td>
+      <td>3</td>
+      <td>Delaware</td>
+      <td>MacOS</td>
+      <td>AMD</td>
+      <td>2019</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>Other</td>
+      <td>2001</td>
+      <td>2</td>
       <td>1</td>
-      <td>Alabama</td>
-      <td>1073</td>
-      <td>Jefferson</td>
-      <td>1999</td>
-      <td>39.0</td>
-      <td>No Units</td>
-      <td>No Units</td>
-      <td>Monitor Only</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3</td>
+      <td>3</td>
+      <td>4</td>
+      <td>Connecticut</td>
+      <td>Linux</td>
+      <td>Intel</td>
+      <td>2004</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Intel (Integrated)</td>
+      <td>2005</td>
+      <td>2</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4</td>
+      <td>4</td>
+      <td>5</td>
+      <td>Alaska</td>
+      <td>Windows (10/8/7)</td>
+      <td>Intel</td>
+      <td>2015</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Nvidea</td>
+      <td>2014</td>
+      <td>5</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>5</td>
+      <td>5</td>
+      <td>6</td>
+      <td>Arkansas</td>
+      <td>Windows (10/8/7)</td>
+      <td>Intel</td>
+      <td>2017</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>Intel (Integrated)</td>
+      <td>2017</td>
+      <td>2</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>6</td>
+      <td>6</td>
+      <td>7</td>
+      <td>Texas</td>
+      <td>Windows (10/8/7)</td>
+      <td>AMD</td>
+      <td>2012</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Nvidea</td>
+      <td>2016</td>
+      <td>4</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>7</td>
+      <td>7</td>
+      <td>8</td>
+      <td>Texas</td>
+      <td>MacOS</td>
+      <td>Intel</td>
+      <td>2015</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>Intel (Integrated)</td>
+      <td>2015</td>
+      <td>3</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>8</td>
+      <td>8</td>
+      <td>9</td>
+      <td>Tennessee</td>
+      <td>Windows (10/8/7)</td>
+      <td>AMD</td>
+      <td>2014</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>Other</td>
+      <td>1000</td>
       <td>1</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>9</td>
+      <td>9</td>
+      <td>10</td>
+      <td>Arizona</td>
+      <td>Windows (10/8/7)</td>
+      <td>Intel</td>
+      <td>2018</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>Nvidia</td>
+      <td>2017</td>
+      <td>4</td>
+      <td>8</td>
     </tr>
   </tbody>
 </table>
