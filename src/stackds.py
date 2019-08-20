@@ -187,6 +187,27 @@ class GUI:
 	#<------Clean------>
 	def fm_clean_select(self,clean):
 		print('Clean')
+	#<-----Replace---->
+	def fm_df_replace(self,rep):
+		dfrep = self.builder.get_object('df_replace_dialog')
+		dfrep.show()
+		columnnumber = 1
+		df = self.dataframe
+		self.repcolrplc = self.builder.get_object('repcolrplc')
+		for (columnName, columnData) in df.iteritems():
+			columnparse = str(columnName)
+			columnnumber = str(columnnumber)
+   			self.repcolrplc.append(columnnumber,columnparse)
+			columnnumber = int(columnnumber)
+			columnnumber = columnnumber+1
+	#<------Show Preferences----->
+	def show_preferences(self,potat):
+		self.pref = self.builder.get_object('preferences')
+		verslabel = self.builder.get_object('prefverslabel')
+		versidfm = self.builder.get_object('VersionID')
+		versid = versidfm.get_label()
+		verslabel.set_text(versid)
+		self.pref.show()
 
 #|	|	|	|	|	|	|	|	|	|	|	|	|	|
 #|	|	|	|	|	Dialogs	|	|	|	|	|	|	|
@@ -326,9 +347,9 @@ class GUI:
 		if self.columndrop == True:
 			df = df.drop(columns=[ide])
 		if self.rowdrop == True:
-			df = df.drop([ide])
+			df = df.drop(df.index[int(ide)])
 		if self.contentdrop == True:
-			print('temp')
+			df = df[~df.str.contains(ide)]
 		self.updatedataview(df)
 		self.dropdialog.show()
 	def Df_Drop_Cancel(self,ppc):
@@ -354,6 +375,8 @@ class GUI:
 		self.columndrop = False
 		self.drop_row_toggle.set_active(False)
 		self.drop_column_toggle.set_active(False)
+		self.Content_drop = self.builder.get_object('Content_Drop_Dialog')
+		self.Content_drop.show()
 		self.packbox.remove_all()
 		self.packbox.Has_Entry = True
 	def on_drop_column_t(self,wwb):
@@ -371,6 +394,25 @@ class GUI:
    			self.packbox.append(columnnumber,columnparse)
 			columnnumber = int(columnnumber)
 			columnnumber = columnnumber+1
+	def content_drop_b(self,eat):
+		self.contenttodrop = self.builder.get_object('contenttodrop')
+		self.packbox.append(str(1),self.contenttodrop.get_text())
+		self.Content_drop.hide()
+	#<------DF Replace------->
+	#TODO Add error dialog for entries not found on axis
+	def df_column_replace(self,ricky):
+		df = self.dataframe
+		print('pickles')
+		toreplace = self.builder.get_object('replcolent')
+		hl = toreplace.get_text()
+		replme = self.repcolrplc.get_active_text()
+		df = df.replace({replme : hl})
+		self.updatedataview(df)
+	def df_cont_repl(self,jam):
+		print('pickles2')
+	#<------Preferences------>
+	def preference_cl(self,cl):
+		self.pref.hide()
 	#_____________________________________
 	#<<<<<<<<<Class Accessories>>>>>>>>>>>
 	def updatedataview(self,df):
