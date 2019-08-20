@@ -46,6 +46,7 @@ from shutil import copyfile
 from subprocess import Popen, PIPE
 from cStringIO import StringIO
 #TODO Future Dependencies:
+#dependency: Plotly Express
 #dependency: Sklearn
 #TODO install in install.sh
 #Dependency: sudo apt-get install wkhtmltopdf
@@ -92,11 +93,8 @@ class GUI:
 		self.dfid = 0
 		#--/Objects--
 		#--Environment-Variables--
-		#These Variables are defined on startup, to be
-		#Adjusted at the user's pleasure
 		self.notebookclosed = False
 		self.nbidmultiplier = 0
-		self.display_head = 10
 		#----Window----
 		#Gotta show the window, too
 		window.show_all()
@@ -167,27 +165,13 @@ class GUI:
 	def df_exec_mb(self,pasghetti):
 		self.df_live_code = self.builder.get_object('df_live_code')
 		self.df_exec_output = self.builder.get_object('df_exec_output')
-		self.df_exec_output.modify_base(Gtk.StateFlags.NORMAL,
-										Gdk.color_parse('green'))
-		self.df_exec_output.modify_text(Gtk.StateFlags.NORMAL,
-										Gdk.color_parse('white'))
+		#self.df_exec_output.modify_bg(Gtk.StateType.Normal,
+		#							Gdk.Color(20000, 10000, 10000))
 		#TODO Change Color^^
 		self.df_live_code.show()
 		self.dfexeci = self.builder.get_object('df_exec_input')
 		self.dfexeco = self.builder.get_object('df_exec_output')
-	#<------Drop----->
-	def fm_df_drop_cl(self,spaghetti):
-		self.dropdialog = self.builder.get_object('drop_dialog')
-		self.packbox = self.builder.get_object('packbox')
-		self.drop_content_toggle = self.builder.get_object(
-													'drop_content_toggle')
-		self.drop_row_toggle = self.builder.get_object('drop_row_toggle')
-		self.drop_column_toggle = self.builder.get_object('drop_column_toggle')
-		self.dropdialog.show()
-	#<------Clean------>
-	def fm_clean_select(self,clean):
-		print('Clean')
-
+#
 #|	|	|	|	|	|	|	|	|	|	|	|	|	|
 #|	|	|	|	|	Dialogs	|	|	|	|	|	|	|
 #|	|	|	|	|	|	|	|	|	|	|	|	|	|
@@ -211,13 +195,13 @@ class GUI:
 		except:
 			print(errormessage(21,'File Imported is not a CSV file'))
 		print('File ',filename,' Read Successfully.')
+		self.display_head = 10
 		dfforconv = df.head(self.display_head)
 		convertimage(dfforconv,css,'swap.png')
 		dfimage = Gtk.Image.new_from_file('swap.png')
 		#Renders scrollbar with DF as image.
 		self.scroller = Gtk.ScrolledWindow.new()
 		self.scroller.add(dfimage)
-		self.scroller.set_focus_child(dfimage)
 		self.notebooklabel = Gtk.Label()
 		self.notebooklabel.set_text(self.filetop)
 		self.thenotebook.append_page(self.scroller,self.notebooklabel)
@@ -300,89 +284,39 @@ class GUI:
 	def df_exec_close(self,hel):
 		self.df_live_code.hide()
 	def df_exec_ex(self,spo):
-		outputbuffer = Gtk.TextBuffer.new()
 		try:
-			df = self.dataframe.copy()
+			df = self.dataframe
 		except:
-			outputbuffer.set_text('zIpy Fatal ERROR!: Data not loaded')
-		self.dfexeco.set_buffer(outputbuffer)
-		userexec = self.dfexeci.get_text()
+			outputbuffer = Gtk.TextBuffer.new()
+			outputbuffer.set_text('SqCode Fatal ERROR!: Data not loaded')
+			self.dfexeco.set_buffer(outputbuffer)
 		sys.stdout = buffer = StringIO()
-		print('*********************')
+		print('***********************')
 		print('===zIpy Lite 0.0.1===')
-		print('*********************')
+		print('***********************')
+		userexec = self.dfexeci.get_text()
 		try:
 			exec(userexec)
 		except:
-			print('zIpy Lite has found an error!')
-			outputbuffer.set_text(buffer.getvalue())
+			print('Code contains error!')
+		outputbuffer = Gtk.TextBuffer.new()
 		outputbuffer.set_text(buffer.getvalue())
 		self.dfexeco.set_buffer(outputbuffer)
 		self.updatedataview(df)
-	#<-------Drop-------->
-	def df_drop_click(self,ppe):
-		df = self.dataframe
-		ide = self.packbox.get_active_text()
-		if self.columndrop == True:
-			df = df.drop(columns=[ide])
-		if self.rowdrop == True:
-			df = df.drop([ide])
-		if self.contentdrop == True:
-			print('temp')
-		self.updatedataview(df)
-		self.dropdialog.show()
-	def Df_Drop_Cancel(self,ppc):
-		self.dropdialog.hide()
-	def on_drop_row_t(self,wwc):
-		columnnumber = 1
-		df = self.dataframe
-		self.rowdrop = True
-		self.contentdrop = False
-		self.columndrop = False
-		self.drop_content_toggle.set_active(False)
-		self.drop_column_toggle.set_active(False)
-		self.packbox.remove_all()
-		for i in df.index:
-			columntitle = str(i)
-			columnnumber = str(columnnumber)
-			self.packbox.append(columnnumber,columntitle)
-			columnnumber = int(columnnumber)
-			columnnumber = columnnumber+1
-	def on_drop_content_t(self,wwe):
-		self.rowdrop = False
-		self.contentdrop = True
-		self.columndrop = False
-		self.drop_row_toggle.set_active(False)
-		self.drop_column_toggle.set_active(False)
-		self.packbox.remove_all()
-		self.packbox.Has_Entry = True
-	def on_drop_column_t(self,wwb):
-		self.columndrop = True
-		self.contentdrop = False
-		self.rowdrop = False
-		self.drop_content_toggle.set_active(False)
-		self.drop_row_toggle.set_active(False)
-		self.packbox.remove_all()
-		columnnumber = 1
-		df = self.dataframe
-		for (columnName, columnData) in df.iteritems():
-			columnparse = str(columnName)
-			columnnumber = str(columnnumber)
-   			self.packbox.append(columnnumber,columnparse)
-			columnnumber = int(columnnumber)
-			columnnumber = columnnumber+1
 	#_____________________________________
 	#<<<<<<<<<Class Accessories>>>>>>>>>>>
 	def updatedataview(self,df):
 		df.to_csv(self.swapfileactive)
-		self.dataframe = pd.read_csv(self.swapfileactive)
+		index = self.indexid
 		dfforconv = df.head(self.display_head)
-		scroller = Gtk.ScrolledWindow.new()
 		convertimage(dfforconv,css,'swap.png')
-		page_num = self.id_counter.get_label()
-		scrolleroller = self.thenotebook.get_nth_page(int(page_num))
-		dfrealimage = scrolleroller.get_focus_child()
-		dfrealimage.set_from_file('swap.png')
+		self.dfimage = Gtk.Image.new_from_file('swap.png')
+		self.scroller = Gtk.ScrolledWindow.new()
+		self.scroller.add(dfimage)
+		self.labeler = Gtk.Label.new()
+		self.labeler.set_text('df'+str(index+1))
+		self.thenotebook.append_page(scroller, labeler)
+		self.fm_closetab_select(self.indexid)
 #========================================
 #<---------Accessory Functions---------->
 #TODO DFPARSER FOR NON IMAGE DF
