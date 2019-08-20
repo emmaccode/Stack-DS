@@ -34,7 +34,11 @@ python stackds.py
 ## Documentation
 Documentation is available on the GitHub Wiki page.
 # Changelog
-
+Version 0.0.3_____________
+Added Preferences Base,
+Added Module menu(Not Visible),
+Added DF - Replace, Drop,
+Tidied Parser 1
 Version 0.0.2_____________
 Enabled Debug by Default for Alpha 0.0.2,
 Added df refresh function,
