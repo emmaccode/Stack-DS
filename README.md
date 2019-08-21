@@ -34,6 +34,20 @@ python stackds.py
 ## Documentation
 Documentation is available on the GitHub Wiki page.
 # Changelog
+**Version 0.0.4_____________** \
+Added Preferences menu \
+Added documentation link \
+Added weblinks \
+Added pipelines menu \
+Removed Debug by default \
+Added html5 export to menu \
+Added extension loader \
+Added extension menu \
+Added customizable extensions \
+Added export pipeline to menu \
+**ATTENTION** \
+The next version, 0.0.5, will be the last release of a standalone StackDS build, and will instead come standard with Dashly: An application for making visualizations and Plot.ly Dashes with DFs directly through StackDS, and Zipy, an easy to use interface for applied machine learning for making predictions. The standalone Version of StackDS will be available here:
+https://github.com/emmettgb/Stack-DS-Standalone \
 **Version 0.0.3_____________** \
 Added Preferences Base \
 Added Module menu(Not Visible) \
