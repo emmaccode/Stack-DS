@@ -38,12 +38,12 @@ Documentation is available on the GitHub Wiki page.
 Added Preferences Base \
 Added Module menu(Not Visible) \
 Added DF - Replace, Drop \
-Version 0.0.2_____________
-Enabled Debug by Default for Alpha 0.0.2,
-Added df refresh function,
-Added DataFrame Filemenu,
-Added Image Renderer, and CSV export,
-Added global CSS,
-Added Notebook ID updater,
-Version 0.0.1_____________
+**Version 0.0.2_____________** \
+Enabled Debug by Default for Alpha 0.0.2 \
+Added df refresh function \
+Added DataFrame Filemenu, \
+Added Image Renderer, and CSV export \
+Added global CSS \
+Added Notebook ID updater \
+**Version 0.0.1_____________**
 ___Init___
