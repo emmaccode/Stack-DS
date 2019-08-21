@@ -27,6 +27,10 @@ except:
 	errormessage(1,"Missing Dependency: GTK")
 #__System__
 from IPython.display import clear_output, Image, display
+from shutil import copyfile
+from subprocess import Popen, PIPE
+from cStringIO import StringIO
+import imp
 #__Dataframes__
 try:
 	import pandas as pd
@@ -42,12 +46,28 @@ try:
 	import imgkit
 except:
 	errormessage(4,"Missing Dependency: imagekit")
-from shutil import copyfile
-from subprocess import Popen, PIPE
-from cStringIO import StringIO
+
+#______Modifications______
+print('Checking for zIpy...')
+try:
+	zIpy = imp.load_source('Myapp', 'extensions/test.py')
+	zIpymod = True
+except:
+	zIpymod = False
+	print('Module zIpy is not installed')
+print('Checking for Dash-Ly...')
+try:
+	dashlymod = imp.load_source('Myapp', 'extensions/dashly.py')
+	DashLymod = True
+except:
+	DashLymod = False
+	print('Checking for Dash-Ly...')
+	print('Module Dash-Ly is not installed')
+	if zIpymod == False:
+		print('Business as usual')
+		print('Running StackDS in Standalone Mode')
 #TODO Future Dependencies:
 #dependency: Sklearn
-#TODO install in install.sh
 #Dependency: sudo apt-get install wkhtmltopdf
 UI_FILE = "src/stackds.ui"
 
@@ -55,24 +75,20 @@ UI_FILE = "src/stackds.ui"
 #=====TODO LIST=====
 #TODO UI Update? Buttons, better coloring,etc.
 #TODO add error GUI for application internal errors
-#TODO Preferences
 #TODO Add Hotkeys
 #TODO Function that places into GUI in treeview, or grid
-#TODO DataFrame Menu
 #TODO Add saved(ID) as boolean, to tell if DF is saved
 #TODO Machine Learning Menu???
 #TODO Data Studio Visualization(seperate class and UI file), plotly, w plotly
 #																		Dash
 #TODO Add confirm overwrite dialog
-#TODO Add Pipeline menu, with storable pipelines, maybe put this into ML menu
-#TODO Df parser, to place df into grid or treeview
-#TODO Add DF saving on tab switch, datablah.tocsv, id before update.
+#TODO Selectable Df parser, to place df into grid or treeview
 #TODO Export HTML
 #TODO Refresh ID, DF, ETC on close, as of right now, you have to switch and
 #												Reopen it...
 #TODO Change color of df_live_code Textbox
 #TODO New DF from series or Txt
-#TODO Preferences: Add Head Size
+#TODO Preferences: Add Head Size for HTML render
 #TODO Preferences: Add Debug mode to make more visible.
 #|		|		 || 		|	  |
 #=====TODO LIST=====
@@ -91,6 +107,25 @@ class GUI:
 		self.id_counter = self.builder.get_object('id_counter')
 		self.dfid = 0
 		#--/Objects--
+		#==EXTENSIONS!==
+		if zIpymod == True:
+			pipelinezipy = self.builder.get_object('pipelinezipy')
+			self.exbar = self.builder.get_object('extbar')
+			zipy = self.builder.get_object('Zipy')
+			zipy.show()
+			self.exbar.show()
+			pipelinezipy.show()
+			self.fm_showext = self.builder.get_object('show_extbar')
+			self.fm_showext.show()
+			self.extbart = True
+		if DashLymod == True:
+			self.exbar = self.builder.get_object('extbar')
+			self.fm_showext = self.builder.get_object('show_extbar')
+			self.exbar.show()
+			dashly = self.builder.get_object('Dashly')
+			dashly.show()
+			self.extbart = True
+			self.fm_showext.show()
 		#--Environment-Variables--
 		#These Variables are defined on startup, to be
 		#Adjusted at the user's pleasure
@@ -200,14 +235,35 @@ class GUI:
    			self.repcolrplc.append(columnnumber,columnparse)
 			columnnumber = int(columnnumber)
 			columnnumber = columnnumber+1
+#=================Pipelines=======>
+	def fm_pipelineshow(self,pip):
+		pipelines = self.builder.get_object('Pipelines')
+		pipelines.show()
+#=================Preferences=====>
 	#<------Show Preferences----->
 	def show_preferences(self,potat):
 		self.pref = self.builder.get_object('preferences')
 		verslabel = self.builder.get_object('prefverslabel')
 		versidfm = self.builder.get_object('VersionID')
+		portfolbut = self.builder.get_object('Portfolbutt')
+		docbut = self.builder.get_object('Documentationbut')
+		websbut = self.builder.get_object('Websitebut')
+		portfolbut.set_label('My Portfolio')
+		docbut.set_label('Documentation')
+		websbut.set_label('StackDS Website')
 		versid = versidfm.get_label()
 		verslabel.set_text(versid)
 		self.pref.show()
+	#<-----Show/Hide Extension bar----->
+	def fm_show_extbar(self,main):
+		if self.extbart == True:
+			self.exbar.hide()
+			self.fm_showext.set_label('Show Extensions')
+			self.extbart = False
+		else:
+			self.exbar.show()
+			self.fm_showext.set_label('Hide Extensions')
+			self.extbart = True
 
 #|	|	|	|	|	|	|	|	|	|	|	|	|	|
 #|	|	|	|	|	Dialogs	|	|	|	|	|	|	|
