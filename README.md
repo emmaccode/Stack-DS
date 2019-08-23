@@ -25,12 +25,22 @@ imgkit
 ##### imgkit
 sudo apt-get install wkhtmltopdf
 ## Install StackDS
-Snap Install not yet available, unfortunately,
-open up source directory with cd ~/
-run:
-./configure && make && sudo make install
-Now:
+##### Run from source
+Ensure you have the dependencies listed above,
+Then:
 python stackds.py
+StackDS can run under Python 3 and Python 2 as of right now.
+Python 2 is set to be deprecated in early January.
+##### Ubuntu
+Apt install is not going to be available until an official release is fabricated.
+##### Snap
+Snap Install not yet available, unfortunately,
+##### Windows
+Windows downloads are and will be available on the StackDS website:
+http://stackds.emmettboudreau.com
+##### MacOS/OSX
+MacOS and OSX builds will be available post Beta
+open up source directory with cd ~/
 ## Documentation
 Documentation is available on the GitHub Wiki page.
 # Changelog
