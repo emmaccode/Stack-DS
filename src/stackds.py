@@ -76,20 +76,14 @@ UI_FILE = "src/stackds.ui"
 #TODO UI Update? Buttons, better coloring,etc.
 #TODO add error GUI for application internal errors
 #TODO Add Hotkeys
-#TODO Function that places into GUI in treeview, or grid
-#TODO Add saved(ID) as boolean, to tell if DF is saved
-#TODO Machine Learning Menu???
-#TODO Data Studio Visualization(seperate class and UI file), plotly, w plotly
-#																		Dash
+#TODO DFParser, for another way to view the DataFrames without rendering images
+#TODO Add saved(ID) as boolean, to tell if DF is saved																	Dash
 #TODO Add confirm overwrite dialog
 #TODO Selectable Df parser, to place df into grid or treeview
-#TODO Export HTML
 #TODO Refresh ID, DF, ETC on close, as of right now, you have to switch and
 #												Reopen it...
 #TODO Change color of df_live_code Textbox
-#TODO New DF from series or Txt
-#TODO Preferences: Add Head Size for HTML render
-#TODO Preferences: Add Debug mode to make more visible.
+#TODO UNNAMED- BUG
 #|		|		 || 		|	  |
 #=====TODO LIST=====
 #<======User Interface======>
@@ -118,6 +112,8 @@ class GUI:
 			self.fm_showext = self.builder.get_object('show_extbar')
 			self.fm_showext.show()
 			self.extbart = True
+			creinzip = self.builder.get_object('creinzip')
+			creinzip.show()
 		if DashLymod == True:
 			self.exbar = self.builder.get_object('extbar')
 			self.fm_showext = self.builder.get_object('show_extbar')
@@ -197,6 +193,10 @@ class GUI:
 		df = self.dataframe
 		self.export_csv = self.builder.get_object('export_csv_dialog')
 		self.export_csv.show()
+	#<--------Export HTML-------->
+	def fm_exporthtml_cl(self,dialog):
+		htmlsave = self.builder.get_object('Save_HTML')
+		htmlsave.show()
 #<============DataFrame Menu======>
 	#<-------Manual Entry------->
 	def df_exec_mb(self,pasghetti):
@@ -405,7 +405,7 @@ class GUI:
 		if self.rowdrop == True:
 			df = df.drop(df.index[int(ide)])
 		if self.contentdrop == True:
-			df = df[~df.str.contains(ide)]
+			df = df.drop(df.str.contains(ide))
 		self.updatedataview(df)
 		self.dropdialog.show()
 	def Df_Drop_Cancel(self,ppc):
@@ -458,7 +458,6 @@ class GUI:
 	#TODO Add error dialog for entries not found on axis
 	def df_column_replace(self,ricky):
 		df = self.dataframe
-		print('pickles')
 		toreplace = self.builder.get_object('replcolent')
 		hl = toreplace.get_text()
 		replme = self.repcolrplc.get_active_text()
@@ -466,9 +465,32 @@ class GUI:
 		self.updatedataview(df)
 	def df_cont_repl(self,jam):
 		print('pickles2')
+	def df_repl_cancel(self,pot):
+		dfrep = self.builder.get_object('df_replace_dialog')
+		dfrep.hide()
+	#Export To HTML
+		
 	#<------Preferences------>
 	def preference_cl(self,cl):
 		self.pref.hide()
+	#<------Export HTML------>
+	def save_html_conf(self, der):		
+		save_html = self.builder.get_object('Save_HTML')
+		htmllabel = self.builder.get_object('Save_HTML_Label')
+		label = htmllabel.get_text()
+		filepath = save_html.get_current_folder
+		savefile = str(filepath)+str(label)+'.html'
+		dfhtml = self.dataframe.to_html()
+		html = css+str(dfhtml)
+		open(savefile, 'w').close()
+		text_file = open(savefile, "a")
+		text_file.write(html)
+		text_file.close()
+		winder = self.builder.get_object('Save_HTML')
+		winder.hide()
+	def save_html_Cancel(self, peer):
+		winder = self.builder.get_object('Save_HTML')
+		winder.hide()
 	#_____________________________________
 	#<<<<<<<<<Class Accessories>>>>>>>>>>>
 	def updatedataview(self,df):
