@@ -1,3 +1,21 @@
+Version 0.0.5_____________
+Updated preferences menu
+Fixed Title bug
+Updated GUI layout
+Added Clean DataFrame Function
+Fixed Df Drop Content
+Added extension capability
+Version 0.0.4_____________ 
+Added Preferences menu 
+Added documentation link 
+Added weblinks 
+Added pipelines menu 
+Removed Debug by default 
+Added html5 export to menu 
+Added extension loader 
+Added extension menu 
+Added customizable extensions 
+Added export pipeline to menu 
 Version 0.0.3_____________
 Added Preferences Base
 Added Module menu(Not Visible)
