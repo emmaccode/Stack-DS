@@ -44,6 +44,13 @@ open up source directory with cd ~/
 ## Documentation
 Documentation is available on the GitHub Wiki page.
 # Changelog
+**Version 0.0.5_____________** \
+Updated preferences menu \
+Fixed Title bug \
+Updated GUI layout \
+Added Clean DataFrame Function \
+Fixed Df Drop Content \
+Added extension capability \
 **Version 0.0.4_____________** \
 Added Preferences menu \
 Added documentation link \
