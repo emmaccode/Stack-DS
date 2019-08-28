@@ -24,6 +24,8 @@ imgkit
 (sudo) pip install gtk
 ##### imgkit
 sudo apt-get install wkhtmltopdf
+##### SKLearn
+(sudo) pip install sklearn
 ## Install StackDS
 ##### Run from source
 Ensure you have the dependencies listed above,
@@ -44,6 +46,14 @@ open up source directory with cd ~/
 ## Documentation
 Documentation is available on the GitHub Wiki page.
 # Changelog
+**Version 0.0.6_____________** \
+Updated UI \
+Added functionality to certain menus \
+Added internal Error GUI \
+Added Export to HTML \
+Extended Content Drop Capability \
+Added SKLearn as a dependency \
+Enabled Pipeline Menu \
 **Version 0.0.5_____________** \
 Updated preferences menu \
 Fixed Title bug \
