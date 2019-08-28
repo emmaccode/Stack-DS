@@ -183,19 +183,31 @@
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <child>
-              <object class="GtkLabel">
+              <object class="GtkTextView">
+                <property name="width_request">400</property>
+                <property name="height_request">400</property>
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="label" translatable="yes">Currently, there is nothing here.</property>
+                <property name="can_focus">True</property>
               </object>
               <packing>
-                <property name="expand">False</property>
+                <property name="expand">True</property>
                 <property name="fill">True</property>
                 <property name="position">0</property>
               </packing>
             </child>
             <child>
-              <placeholder/>
+              <object class="GtkFileChooserWidget">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="local_only">False</property>
+                <property name="preview_widget_active">False</property>
+                <property name="search_mode">True</property>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
             </child>
           </object>
           <packing>
@@ -644,6 +656,7 @@ unstable.</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
+                    <signal name="toggled" handler="debug_mode_toggled_cb" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left_attach">1</property>
@@ -930,7 +943,7 @@ unstable.</property>
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkEntry">
+                  <object class="GtkEntry" id="toreplacecont">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="shadow_type">etched-out</property>
@@ -955,7 +968,7 @@ unstable.</property>
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkEntry">
+                  <object class="GtkEntry" id="withcont">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="shadow_type">etched-out</property>
@@ -1184,6 +1197,66 @@ unstable.</property>
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+  <object class="GtkDialog" id="errordialog">
+    <property name="can_focus">False</property>
+    <property name="hide_titlebar_when_maximized">True</property>
+    <property name="type_hint">dialog</property>
+    <property name="decorated">False</property>
+    <child>
+      <placeholder/>
+    </child>
+    <child internal-child="vbox">
+      <object class="GtkBox">
+        <property name="can_focus">False</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">2</property>
+        <child internal-child="action_area">
+          <object class="GtkButtonBox">
+            <property name="can_focus">False</property>
+            <property name="layout_style">end</property>
+            <child>
+              <placeholder/>
+            </child>
+            <child>
+              <object class="GtkButton">
+                <property name="label" translatable="yes">Ok</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <signal name="clicked" handler="errordialog_hide" swapped="no"/>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="error_dialog_label">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">Error</property>
+            <attributes>
+              <attribute name="font-desc" value="Shado Bold 14"/>
+            </attributes>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="padding">41</property>
             <property name="position">1</property>
           </packing>
         </child>
@@ -1491,7 +1564,7 @@ unstable.</property>
               <object class="GtkMenuItem" id="VersionID">
                 <property name="can_focus">False</property>
                 <property name="no_show_all">True</property>
-                <property name="label" translatable="yes">Stack-DS V 0.0.4 Alpha Build</property>
+                <property name="label" translatable="yes">Stack-DS V 0.0.6 Alpha Build</property>
                 <property name="use_underline">True</property>
               </object>
             </child>
@@ -1523,6 +1596,7 @@ unstable.</property>
                 <property name="tooltip_text" translatable="yes">zIppy ml Environment</property>
                 <property name="label" translatable="yes">Zipy</property>
                 <property name="icon_widget">image1</property>
+                <signal name="clicked" handler="zipy_ext_sel" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">False</property>
