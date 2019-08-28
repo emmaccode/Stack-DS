@@ -29,7 +29,10 @@ except:
 from IPython.display import clear_output, Image, display
 from shutil import copyfile
 from subprocess import Popen, PIPE
-from cStringIO import StringIO
+try:
+	from cStringIO import StringIO
+except:
+	print('No String IO Functionality will be available')
 import imp
 #__Dataframes__
 try:
@@ -46,11 +49,11 @@ try:
 	import imgkit
 except:
 	errormessage(4,"Missing Dependency: imagekit")
-
-#______Modifications______
+#Dependency: sudo apt-get install wkhtmltopdf
+#______EXTENSIONS______
 print('Checking for zIpy...')
 try:
-	zIpy = imp.load_source('Myapp', 'extensions/test.py')
+	zIpy = imp.load_source('Myapp.build', 'extensions/test.py')
 	zIpymod = True
 except:
 	zIpymod = False
@@ -66,15 +69,16 @@ except:
 	if zIpymod == False:
 		print('Business as usual')
 		print('Running StackDS in Standalone Mode')
-#TODO Future Dependencies:
-#dependency: Sklearn
-#Dependency: sudo apt-get install wkhtmltopdf
+#____MACHINE LEARNING____
+try:
+	import sklearn
+except:
+	errormessage(5,"Missing Dependency: SkLearn")
 UI_FILE = "src/stackds.ui"
 
 #<----Dependencies---->
 #=====TODO LIST=====
 #TODO UI Update? Buttons, better coloring,etc.
-#TODO add error GUI for application internal errors
 #TODO Add Hotkeys
 #TODO DFParser, for another way to view the DataFrames without rendering images
 #TODO Add saved(ID) as boolean, to tell if DF is saved																	Dash
@@ -99,6 +103,7 @@ class GUI:
 		window = self.builder.get_object('window')
 		self.thenotebook = self.builder.get_object('thenotebook')
 		self.id_counter = self.builder.get_object('id_counter')
+		self.VersionID = self.builder.get_object('VersionID')
 		self.dfid = 0
 		#--/Objects--
 		#==EXTENSIONS!==
@@ -232,7 +237,7 @@ class GUI:
 		for (columnName, columnData) in df.iteritems():
 			columnparse = str(columnName)
 			columnnumber = str(columnnumber)
-   			self.repcolrplc.append(columnnumber,columnparse)
+			self.repcolrplc.append(columnnumber,columnparse)
 			columnnumber = int(columnnumber)
 			columnnumber = columnnumber+1
 #=================Pipelines=======>
@@ -286,7 +291,7 @@ class GUI:
 			df = pd.read_csv(filename)
 			self.dataopen = self.dataopen+1
 		except:
-			print(errormessage(21,'File Imported is not a CSV file'))
+			self.errordialog("This file is unreadable, is this a CSV?"+filename)
 		print('File ',filename,' Read Successfully.')
 		dfforconv = df.head(self.display_head)
 		convertimage(dfforconv,css,'swap.png')
@@ -405,7 +410,10 @@ class GUI:
 		if self.rowdrop == True:
 			df = df.drop(df.index[int(ide)])
 		if self.contentdrop == True:
-			df = df.drop(df.str.contains(ide))
+			try:
+				df = df.drop(df.str.contains(ide))
+			except:
+				self.errordialog("Entry Not Found on Axis")
 		self.updatedataview(df)
 		self.dropdialog.show()
 	def Df_Drop_Cancel(self,ppc):
@@ -447,7 +455,7 @@ class GUI:
 		for (columnName, columnData) in df.iteritems():
 			columnparse = str(columnName)
 			columnnumber = str(columnnumber)
-   			self.packbox.append(columnnumber,columnparse)
+			self.packbox.append(columnnumber,columnparse)
 			columnnumber = int(columnnumber)
 			columnnumber = columnnumber+1
 	def content_drop_b(self,eat):
@@ -455,16 +463,20 @@ class GUI:
 		self.packbox.append(str(1),self.contenttodrop.get_text())
 		self.Content_drop.hide()
 	#<------DF Replace------->
-	#TODO Add error dialog for entries not found on axis
 	def df_column_replace(self,ricky):
 		df = self.dataframe
 		toreplace = self.builder.get_object('replcolent')
 		hl = toreplace.get_text()
 		replme = self.repcolrplc.get_active_text()
-		df = df.replace({replme : hl})
+		try:
+			df = df.rename({replme : hl})
+		except:
+			self.errordialog("Entry Not Found on Axis")
 		self.updatedataview(df)
 	def df_cont_repl(self,jam):
-		print('pickles2')
+		toreplacecont = self.builder.get_object('toreplacecont')
+		withcont = self.builder.get_object('withcont')
+		df = df.replace(toreplacecont,withcont)
 	def df_repl_cancel(self,pot):
 		dfrep = self.builder.get_object('df_replace_dialog')
 		dfrep.hide()
@@ -473,6 +485,19 @@ class GUI:
 	#<------Preferences------>
 	def preference_cl(self,cl):
 		self.pref.hide()
+	def debug_mode_toggled_cb(self,alc):
+		try:
+			print("Debugmode: ",self.debugmode)
+		except:
+			self.debugmode = False
+		if self.debugmode == True:
+			self.VersionID.hide()
+			self.id_counter.hide()
+			self.debugmode = False
+		else:
+			self.VersionID.show()
+			self.id_counter.show()
+			self.debugmode = True
 	#<------Export HTML------>
 	def save_html_conf(self, der):		
 		save_html = self.builder.get_object('Save_HTML')
@@ -491,8 +516,14 @@ class GUI:
 	def save_html_Cancel(self, peer):
 		winder = self.builder.get_object('Save_HTML')
 		winder.hide()
+#=========================
+#<-------Extensions------>
+#=========================
+	def zipy_ext_sel(self,eof):
+		zIpy
 	#_____________________________________
 	#<<<<<<<<<Class Accessories>>>>>>>>>>>
+	#Image DataView Updater
 	def updatedataview(self,df):
 		df.to_csv(self.swapfileactive)
 		self.dataframe = pd.read_csv(self.swapfileactive)
@@ -503,6 +534,15 @@ class GUI:
 		scrolleroller = self.thenotebook.get_nth_page(int(page_num))
 		dfrealimage = scrolleroller.get_focus_child()
 		dfrealimage.set_from_file('swap.png')
+	#Error Dialog
+	def errordialog(self,text):
+		errordialog = self.builder.get_object('errordialog')
+		errorlabel = self.builder.get_object('error_dialog_label')
+		errorlabel.set_text(text)
+		errordialog.show()
+	def errordialog_hide(self,spg):
+		errordialog = self.builder.get_object('errordialog')
+		errordialog.hide()
 #========================================
 #<---------Accessory Functions---------->
 #TODO DFPARSER FOR NON IMAGE DF
