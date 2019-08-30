@@ -54,6 +54,8 @@ Added Export to HTML \
 Extended Content Drop Capability \
 Added SKLearn as a dependency \
 Enabled Pipeline Menu \
+Added functionality for opening pipelines \
+Enabled Debug mode (Not stored) \
 **Version 0.0.5_____________** \
 Updated preferences menu \
 Fixed Title bug \
