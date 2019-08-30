@@ -516,6 +516,25 @@ class GUI:
 	def save_html_Cancel(self, peer):
 		winder = self.builder.get_object('Save_HTML')
 		winder.hide()
+	#<------Pipelines------>
+	def pipl_fit(self,inp):
+		pipeline_text = self.builder.get_object('pipeline_text')
+		pipeline_text.set_buffer(self.pipelineimp)
+	def pipl_close(self,inp):
+		pip = self.builder.get_object('Pipelines')
+		pip.hide()
+	def pipl_select(self,pip):
+		self.pipelineimp = Gtk.TextBuffer.new()
+		piplselector = self.builder.get_object('piplselecter')
+		filepath = piplselector.get_current_folder()
+		filename = piplselector.get_filename()
+		piplfile = (filepath+filename)
+		piplopen = open(filename,"r")
+		self.pipelineimp.set_text(str(piplopen))
+		pipeline_text = self.builder.get_object('pipeline_text')
+		pipeline_text.set_buffer(self.pipelineimp)
+		
+	
 #=========================
 #<-------Extensions------>
 #=========================

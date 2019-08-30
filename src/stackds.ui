@@ -133,7 +133,7 @@
             <property name="can_focus">False</property>
             <property name="layout_style">end</property>
             <child>
-              <object class="GtkButton">
+              <object class="GtkButton" id="pipl_close">
                 <property name="label" translatable="yes">Close</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -151,6 +151,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
+                <signal name="clicked" handler="pipl_fit" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -183,7 +184,7 @@
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <child>
-              <object class="GtkTextView">
+              <object class="GtkTextView" id="pipeline_text">
                 <property name="width_request">400</property>
                 <property name="height_request">400</property>
                 <property name="visible">True</property>
@@ -196,12 +197,13 @@
               </packing>
             </child>
             <child>
-              <object class="GtkFileChooserWidget">
+              <object class="GtkFileChooserWidget" id="piplselecter">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="local_only">False</property>
                 <property name="preview_widget_active">False</property>
                 <property name="search_mode">True</property>
+                <signal name="selection-changed" handler="pipl_select" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">True</property>
