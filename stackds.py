@@ -70,7 +70,7 @@ except:
 		print('Business as usual')
 		print('Running StackDS in Standalone Mode')
 #MACHINE LEARNING
-import SKLEARN
+import sklearn
 UI_FILE = "src/stackds.ui"
 
 #<----Dependencies---->
