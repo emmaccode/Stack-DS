@@ -8,11 +8,12 @@ More to come - After Development ensues, eventually, more features will be added
 ### Installation
 Version 0.1.0 of Stack-DS will be released for MacOS, Linux, and Windows. However, The unstable releases between full releases ,(i.e. 0.0.5), will be available as source.
 #### Stack-DS Dependencies
-IPython (clear_output, Image, display)
-GTK (Gtk, GdkPixbuf, Gdk)
-Numpy
-Pandas
-imgkit
+IPython (clear_output, Image, display) \
+GTK (Gtk, GdkPixbuf, Gdk) \
+Numpy \
+Pandas \
+imgkit \
+Scikit-Learn
 #### Fix Dependency issues
 ##### ipython
 (sudo) pip install ipython
