@@ -226,7 +226,8 @@ class GUI:
 		self.dropdialog.show()
 	#<------Clean------>
 	def fm_clean_select(self,clean):
-		print('Clean')
+		clean = self.builder.get_object('cleandf_di')
+		clean.show()
 	#<-----Replace---->
 	def fm_df_replace(self,rep):
 		dfrep = self.builder.get_object('df_replace_dialog')
@@ -533,7 +534,10 @@ class GUI:
 		self.pipelineimp.set_text(str(piplopen))
 		pipeline_text = self.builder.get_object('pipeline_text')
 		pipeline_text.set_buffer(self.pipelineimp)
-		
+	#<-----Clean----->
+	def cleandf_cancel(self,ss):
+		clean = self.builder.get_object('cleandf_di')
+		clean.hide()
 	
 #=========================
 #<-------Extensions------>
