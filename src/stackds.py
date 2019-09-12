@@ -549,7 +549,7 @@ class GUI:
 	#Image DataView Updater
 	def updatedataview(self,df):
 		df.to_csv(self.swapfileactive)
-		self.dataframe = pd.read_csv(self.swapfileactive)
+		self.dataframe = pd.read_csv(self.swapfileactive,index_col=0)
 		dfforconv = df.head(self.display_head)
 		scroller = Gtk.ScrolledWindow.new()
 		convertimage(dfforconv,css,'swap.png')
