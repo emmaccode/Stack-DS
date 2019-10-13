@@ -226,8 +226,7 @@ class GUI:
 		self.dropdialog.show()
 	#<------Clean------>
 	def fm_clean_select(self,clean):
-		clean = self.builder.get_object('cleandf_di')
-		clean.show()
+		print('Clean')
 	#<-----Replace---->
 	def fm_df_replace(self,rep):
 		dfrep = self.builder.get_object('df_replace_dialog')
@@ -534,10 +533,7 @@ class GUI:
 		self.pipelineimp.set_text(str(piplopen))
 		pipeline_text = self.builder.get_object('pipeline_text')
 		pipeline_text.set_buffer(self.pipelineimp)
-	#<-----Clean----->
-	def cleandf_cancel(self,ss):
-		clean = self.builder.get_object('cleandf_di')
-		clean.hide()
+		
 	
 #=========================
 #<-------Extensions------>
@@ -549,7 +545,7 @@ class GUI:
 	#Image DataView Updater
 	def updatedataview(self,df):
 		df.to_csv(self.swapfileactive)
-		self.dataframe = pd.read_csv(self.swapfileactive,index_col=0)
+		self.dataframe = pd.read_csv(self.swapfileactive)
 		dfforconv = df.head(self.display_head)
 		scroller = Gtk.ScrolledWindow.new()
 		convertimage(dfforconv,css,'swap.png')
