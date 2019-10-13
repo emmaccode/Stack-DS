@@ -278,7 +278,7 @@ class GUI:
 	#<-----Read CSV----->
 	def open_csv_cancel_click(self,opene):
 		self.open_csv.hide()
-		#When user double clicks file selection
+		# When user double clicks file selection
 	def read_file_activated(self,open_csv):
 		window = self.builder.get_object('window')
 		filename = self.open_csv.get_uri()
@@ -297,7 +297,7 @@ class GUI:
 		dfforconv = df.head(self.display_head)
 		convertimage(dfforconv,css,'swap.png')
 		dfimage = Gtk.Image.new_from_file('swap.png')
-		#Renders scrollbar with DF as image.
+		# Renders scrollbar with DF as image.
 		self.scroller = Gtk.ScrolledWindow.new()
 		self.scroller.add(dfimage)
 		self.scroller.set_focus_child(dfimage)
